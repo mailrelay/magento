@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Mrsync</name>
+    <version>1.0.0</version>
+    <stability>alpha</stability>
+    <license>GPL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Sincronizaci&#xF3;n de usuarios de Magento con Mailrelay.</summary>
+    <description>Sincronice sus usuarios de Magento con Mailrelay, gracias a este plugin. Mantenga siempre informados a sus usuarios de las novedades de su sitio.</description>
+    <notes>Initial version</notes>
+    <authors><author><name>Mailrelay</name><user>Mailrelay</user><email>info@mailrelay.com</email></author></authors>
+    <date>2012-11-07</date>
+    <time>16:23:51</time>
+    <contents><target name="magecommunity"><dir name="Ysoft"><dir name="Mrsync"><dir name="Block"><dir name="Adminhtml"><dir name="Form"><file name="Index.php" hash="6d86487072d040df9abbcabea82e9e11"/></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="edd11a40a605412a28aba642fc565589"/></dir><dir name="Model"><file name="Mrsync.php" hash="30fe8f1c9432689d0881d97501e709b4"/><file name="Observer.php" hash="723fc5b86e9b627a5b9b48a5fc2fc63b"/><dir name="Source"><file name="Mrsyncgroups.php" hash="c2e05db3bea94ead320facc7923bfc82"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="MrsyncController.php" hash="b0174de585b2259a2539fbc7dd832e56"/><file name="MrsyncController.php.save" hash="a79f170e7cc007b6c990ab3e95d13cb1"/></dir></dir><dir name="etc"><file name="config.xml" hash="a0155c9a40468e643bc4b1a6fe5f192a"/><file name="system.xml" hash="196509690e042af836051f31ded26943"/></dir></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="mrsync.xml" hash="c4ffc20b0e065779f43afed70420d0e2"/></dir><dir name="template"><dir name="mrsync"><file name="index.phtml" hash="bf36434e5cc1891e8cc96c11395e4b1e"/><file name="mrsync.phtml" hash="a2fb90abcb4472dcde01d402349e4e88"/><file name="startsync.phtml" hash="0217ffbad94c0437215af8993e5e6519"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>4.0.0</min><max>6.9.9</max></php></required></dependencies>
+</package>

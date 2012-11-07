@@ -1,0 +1,25 @@
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?=$this->__('Mailrelay sync users')?></h3></td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit">
+        <h4 class="icon-head head-index-form fieldset-legend"><?=$this->__('User sync. Step 3 of 3 (summary)')?></h4>
+        <fieldset id="my-fieldset">
+            <table cellspacing="0" class="form-list">
+                <tr>
+                    <td class="label"><?=$this->__('New users')?>:</td>
+		    <td class="label"><?php echo $this->new_users; ?></td>
+                </tr>
+
+                <tr>
+                    <td class="label"><?=$this->__('Updated users')?>:</td>
+		    <td class="label"><?php echo $this->updated_users; ?></td>
+                </tr>
+
+            </table>
+        </fieldset>
+    </form>
+</div>

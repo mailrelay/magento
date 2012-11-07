@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<config>
+	<sections>
+		<mrsync translate="label">
+			<label>MRSync settings</label>
+			<tab>customer</tab>
+			<frontend_type>text</frontend_type>
+			<sort_order>999</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<mrsync translate="label">
+					<label>MRSync settings</label>
+					<sort_order>10</sort_order>
+					<frontend_type>text</frontend_type>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<fields>
+						<sync_host translate="Hostname">
+							<label>Host</label>
+							<comment>Please enter your MailRelay hostname</comment>
+							<frontend_type>text</frontend_type>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>1</sort_order>
+						</sync_host>
+
+						<sync_user translate="User">
+							<label>User</label>
+							<comment>Please enter your MailRelay user</comment>
+							<frontend_type>text</frontend_type>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>2</sort_order>
+						</sync_user>
+
+						<sync_pass translate="Password">
+							<label>Password</label>
+							<comment>Please enter your MailRelay password</comment>
+							<frontend_type>password</frontend_type>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>3</sort_order>
+						</sync_pass>
+
+						<autosync_users translate="Automatically sync Magento users">
+							<label>Automatically sync Magento users</label>
+							<comment>Check if you want that your Magento users are synced automatically with Mailrelay</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>8</sort_order>
+						</autosync_users>
+
+						<autoremove_users translate="Automatically remove Magento users">
+							<label>Automatically remove Magento users</label>
+							<comment>Check if you want that removed Magento users are removed automatically from Mailrelay</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>9</sort_order>
+						</autoremove_users>
+
+						<sync_groups translate="Groups to sync">
+							<label>Groups to sync</label>
+							<comment>Select the Mailrelay groups to sync to</comment>
+							<frontend_type>multiselect</frontend_type>
+							<source_model>ysoft_mrsync_model_source_mrsyncgroups</source_model>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<sort_order>5</sort_order>
+						</sync_groups>
+
+						<mrsync_smtp_enable translate="Enable SMTP by Mailrelay">
+							<label>Enable SMTP by Mailrelay</label>
+							<comment>It's also possible to enable SMTP email sending, for all Magento emails, to be sent using your Mailrelay account user data</comment>
+							<frontend_type>select</frontend_type>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<sort_order>10</sort_order>
+							<show_in_store>1</show_in_store>
+						</mrsync_smtp_enable>
+
+					</fields>
+				</mrsync>
+			</groups>
+		</mrsync>
+	</sections>
+</config>

@@ -1,0 +1,52 @@
+<?php
+class Ysoft_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Controller_Action
+{
+	public function indexAction()
+	{
+		$this->loadLayout();
+		$this->_setActiveMenu("customer/mrsync");
+
+		$this->_addBreadcrumb(Mage::helper('mrsync')->__("Mailrelay sync users"), Mage::helper('mrsync')->__("Mailrelay sync users"));
+
+		$block = $this->getLayout()->getBlock("mrsync");
+		$block->setData("sync_host", Mage::getStoreConfig("mrsync/mrsync/sync_host"));
+		$block->setData("sync_user", Mage::getStoreConfig("mrsync/mrsync/sync_user"));
+		$block->setData("sync_pass", Mage::getStoreConfig("mrsync/mrsync/sync_pass"));
+		$this->renderLayout();
+	}
+
+	public function startsyncAction()
+	{
+		$this->loadLayout();
+		$this->_setActiveMenu("customer/mrsync");
+
+		$this->_addBreadcrumb(Mage::helper('mrsync')->__("Mailrelay sync users"), Mage::helper('mrsync')->__("Mailrelay sync users"));
+
+		// first retrieve all customer groups
+		$customer_group = new Mage_Customer_Model_Group();
+		$all_groups = $customer_group->getCollection()->toOptionHash();
+		$groups = array();
+		foreach($all_groups as $key=>$group)
+		{
+			$groups[$key] = array("value"=>$group, "label"=>$group);
+		}
+		$block = $this->getLayout()->getBlock("startsync");
+		$block->setData("customer_groups", $groups);
+
+		$model = Mage::getModel("mrsync/mrsync");
+		$groups = $model->getGroups();
+		$final = array();
+		foreach($groups as $group)
+		{
+			$final[] = array("label"=>$group["label"], "value"=>$group["value"]);
+		}
+		$block->setData("mrsync_groups", $final);
+		$this->renderLayout();
+	}
+
+	// action to sync groups
+	public function groupsyncAction()
+	{
+		die("here");
+	}
+}
