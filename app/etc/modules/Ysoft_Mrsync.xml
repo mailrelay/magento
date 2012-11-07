@@ -1,0 +1,8 @@
+<config>
+	<modules>
+		<Ysoft_Mrsync>
+			<active>true</active>
+			<codePool>community</codePool>
+		</Ysoft_Mrsync>
+	</modules>
+</config>
