@@ -1,0 +1,8 @@
+<config>
+	<modules>
+		<Mailrelay_Mrsync>
+			<active>true</active>
+			<codePool>community</codePool>
+		</Mailrelay_Mrsync>
+	</modules>
+</config>

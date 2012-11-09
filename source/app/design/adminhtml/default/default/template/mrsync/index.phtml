@@ -1,0 +1,49 @@
+<form id="sync_form" name="sync_form" method="post" action="<?php echo $this->getUrl('*/*/groupsync')?>" >
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?=$this->__('Mailrelay sync users')?></h3></td>
+            <td class="a-right">
+                <button class="scalable save" type="submit"><span>Sync groups</span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit">
+        <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+<?php
+if ($this->error)
+{
+	?><h4 style="color:red"><?php echo $this->error; ?></h4><?php
+}
+?>
+
+	<fieldset>
+
+	<h5 style="text-align:left;"><?php echo $this->__("Please select the groups to sync"); ?></h5><br />
+		<p><label for="customer_groups"><?php echo $this->__('Select the Magento groups to sync')?></label><br />
+                <select class="required-entry validate-select" name="customer_groups[]" id="customer_groups" multiple="true">
+			<?php
+			foreach($this->customer_groups as $group)
+			{
+				?><option value="<?php echo $group["value"]; ?>"><?php echo $group["label"]; ?></option><?php
+			}
+			?>
+		</select></p>
+
+		<p><label for="mrsync_groups"><?php echo $this->__('Select the Mailrelay groups to sync to')?></label><br />
+                <select class="required-entry validate-select" name="mrsync_groups[]" id="mrsync_groups" multiple="true">
+                        <?php
+                        foreach($this->mrsync_groups as $group)
+                        {
+                                ?><option value="<?php echo $group["value"]; ?>"><?php echo $group["label"]; ?></option><?php
+                        }
+                        ?>
+                </select></p>
+        </fieldset>
+</div>
+</form>
+
+<script type="text/javascript">
+    var syncForm = new varienForm('sync_form', true);
+</script>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<layout>
+	<adminhtml_mrsync_index>
+        	<update handle="mrsync_index"/>
+        	<reference name="content">
+            		<block type="adminhtml/template" name="mrsync" template="mrsync/index.phtml" />
+        	</reference>
+    	</adminhtml_mrsync_index>
+
+	<adminhtml_mrsync_startsync>
+		<update handle="mrsync_startsync" />
+		<reference name="content">
+			<block type="adminhtml/template" name="startsync" template="mrsync/startsync.phtml" />
+		</reference>
+	</adminhtml_mrsync_startsync>
+
+        <adminhtml_mrsync_groupsync>
+                <update handle="mrsync_groupsync" />
+                <reference name="content">
+                        <block type="adminhtml/template" name="mrsync" template="mrsync/mrsync.phtml" />
+                </reference>
+        </adminhtml_mrsync_groupsync>
+</layout>
