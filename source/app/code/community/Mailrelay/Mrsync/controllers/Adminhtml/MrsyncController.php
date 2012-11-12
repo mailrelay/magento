@@ -118,4 +118,49 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
 
 		}
 	}
+
+	public function testAction()
+	{
+		try
+		{
+	                $host = Mage::getStoreConfig("mrsync/mrsync/smtp_host");
+        	        $user = Mage::getStoreConfig("mrsync/mrsync/smtp_user");
+                	$pass = Mage::getStoreConfig("mrsync/mrsync/smtp_password");
+
+	                $emailSmtpConf = array(
+        	                'auth'=>'login',
+                	        'username' => $user,
+                	        'password' => $pass
+                	);
+        		ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
+        		ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
+
+	                $transport = new Zend_Mail_Transport_Smtp(strtolower($host), $emailSmtpConf);
+
+			// email config
+			$default_email = Mage::getStoreConfig('trans_email/ident_general/email');
+			$mail = Mage::getModel('core/email');
+			$mail->setToEmail($default_email);
+			$mail->setToName('Mailrelay user');
+			$mail->setBody("Mailrelay SMTP Testing");
+			$mail->setSubject("Mailrelay SMTP testing");
+			$mail->setFromEmail("info@mailrelay.com");
+			$mail->setFromName("Mailrelay");
+			$mail->setType("html");
+
+			Zend_Mail::setDefaultTransport($transport);
+
+        	        $mail->send($transport);
+
+			// redirect to config
+			$this->_getSession()->addSuccess(Mage::helper("mrsync")->__("A test email has been sent to your default Magento email address."));
+                        $this->_redirect("*/system_config/edit/section/mrsync");
+		}
+        	catch (Exception $e) {
+            		$this->_mail = null;
+			$this->_getSession()->addError($e->getMessage());
+            		Mage::logException($e);
+                        $this->_redirect("*/system_config/edit/section/mrsync");
+        	}
+	}
 }

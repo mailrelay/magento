@@ -123,9 +123,24 @@
 							<sort_order>13</sort_order>
 						</smtp_password>
 
+						<test translate="Test SMTP settings">
+							<label></label>
+							<frontend_type>button</frontend_type>
+							<sort_order>14</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>0</show_in_website>
+							<show_in_store>0</show_in_store>
+							<frontend_model>mrsync/test</frontend_model>
+							<comment>A test email will be sent to your store default email</comment>
+						</test>
+
 					</fields>
 				</mrsync>
 			</groups>
+
+
 		</mrsync>
 	</sections>
+
+
 </config>

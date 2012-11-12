@@ -119,5 +119,11 @@
 				</observers>
 			</newsletter_subscriber_delete_after>
 		</events>
+
+		<blocks>
+			<mrsync>
+				<class>Mailrelay_Mrsync_Block</class>
+			</mrsync>
+		</blocks>
 	</global>
 </config>
