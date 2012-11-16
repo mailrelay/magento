@@ -2,17 +2,17 @@
 <package>
     <name>Mrsync</name>
     <version>1.0.0</version>
-    <stability>alpha</stability>
+    <stability>stable</stability>
     <license>GPL</license>
     <channel>community</channel>
     <extends/>
     <summary>Sincronizaci&#xF3;n de usuarios de Magento con Mailrelay.</summary>
     <description>Sincronice sus usuarios de Magento con Mailrelay, gracias a este plugin. Mantenga siempre informados a sus usuarios de las novedades de su sitio.</description>
-    <notes>Initial version</notes>
+    <notes>Magento plugin for integration with Mailrelay</notes>
     <authors><author><name>Mailrelay</name><user>Mailrelay</user><email>info@mailrelay.com</email></author></authors>
-    <date>2012-11-12</date>
-    <time>16:25:12</time>
-    <contents><target name="magecommunity"><dir name="Mailrelay"><dir name="Mrsync"><dir name="Block"><dir name="Adminhtml"><dir name="Form"><file name="Index.php" hash="082aa145614f1043126951059a0c613b"/></dir></dir><file name="Test.php" hash="14cd4b0351de275b6ac0e7e38fd8542b"/></dir><dir name="Helper"><file name="Data.php" hash="970ea4935d1ac5c622a39deabbe24330"/></dir><dir name="Model"><dir name="Core"><dir name="Email"><file name="Template.php" hash="16ee0267b3ee68b598dafcd6dddec302"/></dir></dir><file name="Mrsync.php" hash="9e175a97edccaf04c02a043fe574aa8a"/><file name="Observer.php" hash="9f894249fe14696f950b4b19e4423367"/><dir name="Source"><file name="Mrsyncgroups.php" hash="f49ffd6995d713d316fb3a09021fbcc0"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="MrsyncController.php" hash="89c640330e121755c28d2506a183dc4d"/></dir></dir><dir name="etc"><file name="config.xml" hash="c818b2340044be5ec8fb79282346e65a"/><file name="system.xml" hash="140ca9934a8be6397c605442380d6736"/></dir></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="mrsync.xml" hash="c4ffc20b0e065779f43afed70420d0e2"/></dir><dir name="template"><dir name="mrsync"><file name="index.phtml" hash="a762b1a09a2d091eeebd3fabb2f7f644"/><file name="mrsync.phtml" hash="a86bc62422847adb629ad05f05092b9e"/></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Mailrelay_Mrsync.xml" hash="b2dd70b688f7491d16f385f10f00c38b"/></dir></target></contents>
+    <date>2012-11-16</date>
+    <time>14:46:08</time>
+    <contents><target name="magecommunity"><dir name="Mailrelay"><dir name="Mrsync"><dir name="Block"><dir name="Adminhtml"><dir name="Form"><file name="Index.php" hash="082aa145614f1043126951059a0c613b"/></dir></dir><file name="Test.php" hash="14cd4b0351de275b6ac0e7e38fd8542b"/></dir><dir name="Helper"><file name="Data.php" hash="970ea4935d1ac5c622a39deabbe24330"/></dir><dir name="Model"><dir name="Core"><dir name="Email"><file name="Template.php" hash="948e3c0f0b26a00f6f7b28291eaa1612"/></dir></dir><file name="Mrsync.php" hash="9e175a97edccaf04c02a043fe574aa8a"/><file name="Observer.php" hash="9f894249fe14696f950b4b19e4423367"/><dir name="Source"><file name="Mrsyncgroups.php" hash="f49ffd6995d713d316fb3a09021fbcc0"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="MrsyncController.php" hash="50c299d463ce212fc278213748d677b3"/></dir></dir><dir name="etc"><file name="config.xml" hash="c818b2340044be5ec8fb79282346e65a"/><file name="system.xml" hash="e96f88b3027bd74bb6304e3567925106"/></dir></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="mrsync.xml" hash="c4ffc20b0e065779f43afed70420d0e2"/></dir><dir name="template"><dir name="mrsync"><file name="index.phtml" hash="a762b1a09a2d091eeebd3fabb2f7f644"/><file name="mrsync.phtml" hash="a86bc62422847adb629ad05f05092b9e"/></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Mailrelay_Mrsync.xml" hash="b2dd70b688f7491d16f385f10f00c38b"/></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>4.0.0</min><max>6.9.9</max></php></required></dependencies>
 </package>

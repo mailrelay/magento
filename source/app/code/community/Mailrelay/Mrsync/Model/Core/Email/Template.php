@@ -76,9 +76,9 @@ class Mailrelay_Mrsync_Model_Core_Email_Template extends Mage_Core_Model_Email_T
 
         try 
 	{
-		$host = Mage::getStoreConfig("mrsync/mrsync/smtp_host");
-		$user = Mage::getStoreConfig("mrsync/mrsync/smtp_user");
-		$pass = Mage::getStoreConfig("mrsync/mrsync/smtp_password");
+		$host = Mage::getStoreConfig("mrsync/smtp/smtp_host");
+		$user = Mage::getStoreConfig("mrsync/smtp/smtp_user");
+		$pass = Mage::getStoreConfig("mrsync/smtp/smtp_password");
 
             	$emailSmtpConf = array(
 			'auth'=>'login',

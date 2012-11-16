@@ -123,9 +123,9 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
 	{
 		try
 		{
-	                $host = Mage::getStoreConfig("mrsync/mrsync/smtp_host");
-        	        $user = Mage::getStoreConfig("mrsync/mrsync/smtp_user");
-                	$pass = Mage::getStoreConfig("mrsync/mrsync/smtp_password");
+	                $host = Mage::getStoreConfig("mrsync/smtp/smtp_host");
+        	        $user = Mage::getStoreConfig("mrsync/smtp/smtp_user");
+                	$pass = Mage::getStoreConfig("mrsync/smtp/smtp_password");
 
 	                $emailSmtpConf = array(
         	                'auth'=>'login',

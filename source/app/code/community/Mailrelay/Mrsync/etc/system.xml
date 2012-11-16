@@ -81,7 +81,19 @@
 							<show_in_store>1</show_in_store>
 							<sort_order>5</sort_order>
 						</sync_groups>
+					</fields>
+				</mrsync>
 
+				<smtp>
+					<label>Mailrelay SMTP settings</label>
+					<comment>Please only fill the SMTP information if you are going to enable the SMTP email sending</comment>
+					<sort_order>20</sort_order>
+					<frontend_type>text</frontend_type>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+
+					<fields>
 						<mrsync_smtp_enable translate="Enable SMTP by Mailrelay">
 							<label>Enable SMTP by Mailrelay</label>
 							<comment>It's also possible to enable SMTP email sending, for all Magento emails, to be sent using your Mailrelay account user data</comment>
@@ -135,7 +147,7 @@
 						</test>
 
 					</fields>
-				</mrsync>
+				</smtp>
 			</groups>
 
 
