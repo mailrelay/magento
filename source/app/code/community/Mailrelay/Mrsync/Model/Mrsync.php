@@ -18,6 +18,11 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 		return true;
     	}
 
+	public function getExtensionVersion()
+	{
+		return (string) Mage::getConfig()->getNode()->modules->Mailrelay_Mrsync->version;
+	}
+
 	public function initCurl($host = "")
 	{
 		if (!$host)
@@ -34,6 +39,12 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 
 		        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         		curl_setopt($curl, CURLOPT_POST, 1);
+
+			$headers = array(
+				'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+			);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
 		        $result = $this->checkCurlInit( $curl );
 			if ($result)
 			{
@@ -75,6 +86,11 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 		{
 	        	curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $params);
 			curl_setopt($this->_curl, CURLOPT_VERBOSE, TRUE);
+                        $headers = array(
+                                'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+                        );
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
 		        $result = curl_exec($this->_curl);
 		        $jsonResult = json_decode($result);
 
@@ -101,6 +117,10 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
             		$params['apiKey'] = $apiKey;
         	}
         	curl_setopt( $this->_curl, CURLOPT_POSTFIELDS, $params );
+                $headers = array(
+			'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+                );
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
 		$result = curl_exec( $this->_curl );
         	$jsonResult = json_decode($result);
@@ -219,6 +239,11 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 
             	$post = http_build_query($params);
             	curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
+                $headers = array(
+	                'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+                );
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
             	$result = curl_exec($this->_curl);
             	$jsonResult = json_decode($result);
 
@@ -251,6 +276,11 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 
             	$post = http_build_query($params);
             	curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
+                $headers = array(
+ 	               'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+                );
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
             	$result = curl_exec($this->_curl);
             	$jsonResult = json_decode($result);
 
@@ -287,6 +317,11 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 
             $post = http_build_query($params);
             curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
+            $headers = array(
+	            'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+            );
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
             $result = curl_exec($this->_curl);
             $jsonResult = json_decode($result);
 
