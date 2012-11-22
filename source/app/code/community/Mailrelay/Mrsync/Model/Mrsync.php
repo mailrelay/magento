@@ -41,7 +41,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
         		curl_setopt($curl, CURLOPT_POST, 1);
 
 			$headers = array(
-				'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+				'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
 			);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -87,7 +87,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 	        	curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $params);
 			curl_setopt($this->_curl, CURLOPT_VERBOSE, TRUE);
                         $headers = array(
-                                'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+                                'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
                         );
                         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -118,7 +118,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
         	}
         	curl_setopt( $this->_curl, CURLOPT_POSTFIELDS, $params );
                 $headers = array(
-			'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+			'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
                 );
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -240,7 +240,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
             	$post = http_build_query($params);
             	curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
                 $headers = array(
-	                'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+	                'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
                 );
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -277,7 +277,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
             	$post = http_build_query($params);
             	curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
                 $headers = array(
- 	               'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+ 	               'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
                 );
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
@@ -318,7 +318,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
             $post = http_build_query($params);
             curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
             $headers = array(
-	            'X-Request-Origin' => 'Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+	            'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
             );
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
