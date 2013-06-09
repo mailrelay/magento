@@ -1,129 +1,129 @@
 <?xml version="1.0"?>
 <config>
-	<modules>
-		<Mailrelay_Mrsync>
-			<version>1.0.0</version>
-		</Mailrelay_Mrsync>
-	</modules>
+    <modules>
+        <Mailrelay_Mrsync>
+            <version>1.1.0</version>
+        </Mailrelay_Mrsync>
+    </modules>
 
-	<admin>
-		<routers>
-			<adminhtml>
-				<args>
-					<modules>
-						<mrsync after="Mage_Adminhtml">Mailrelay_Mrsync_Adminhtml</mrsync>
-					</modules>
-				</args>
-			</adminhtml>
-		</routers>
-	</admin>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <mrsync after="Mage_Adminhtml">Mailrelay_Mrsync_Adminhtml</mrsync>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 
-	<adminhtml>
-		<menu>
-			<customer>
-				<children>
-					<mrsync translate="Mailrelay sync users" module="mrsync">
-						<title>Mailrelay sync users</title>
-						<action>adminhtml/mrsync</action>
-						<sort_order>999</sort_order>
-					</mrsync>
-				</children>
-			</customer>
-		</menu>
-		<acl>
-            		<resources>
-                		<admin>  <!--This is acl based on URL. If you see URL it would be /admin/system_config/ -->
-                    			<children>
-                        			<system>
-                            				<children>
-                                         			<config>
-                                                  			<children>
-                                            					<mrsync translate="title" module="mrsync">  <!-- This is name of the section created by us -->
-                                                					<title>MRSync ACL</title>  <!-- Title as shown in User->Roles->Permissions Window -->
-                                                					<sort_order>99</sort_order>
-                                            					</mrsync>
-                                        				</children>
-                                				</config>
-                            				</children>
-                        			</system>
-                    			</children>
-                		</admin>
-            		</resources>
-        	</acl>
+    <adminhtml>
+        <menu>
+            <customer>
+                <children>
+                    <mrsync translate="Mailrelay sync users" module="mrsync">
+                        <title>Mailrelay sync users</title>
+                        <action>adminhtml/mrsync</action>
+                        <sort_order>999</sort_order>
+                    </mrsync>
+                </children>
+            </customer>
+        </menu>
+        <acl>
+                    <resources>
+                        <admin>  <!--This is acl based on URL. If you see URL it would be /admin/system_config/ -->
+                                <children>
+                                    <system>
+                                            <children>
+                                                     <config>
+                                                              <children>
+                                                                <mrsync translate="title" module="mrsync">  <!-- This is name of the section created by us -->
+                                                                    <title>MRSync ACL</title>  <!-- Title as shown in User->Roles->Permissions Window -->
+                                                                    <sort_order>99</sort_order>
+                                                                </mrsync>
+                                                        </children>
+                                                </config>
+                                            </children>
+                                    </system>
+                                </children>
+                        </admin>
+                    </resources>
+            </acl>
 
-		<layout>
-			<updates>
-				<mrsync>
-					<file>mrsync.xml</file>
-				</mrsync>
-			</updates>
-		</layout>
+        <layout>
+            <updates>
+                <mrsync>
+                    <file>mrsync.xml</file>
+                </mrsync>
+            </updates>
+        </layout>
 
-		<events>
-			<admin_system_config_changed_section_mrsync>
-				<observers>
-					<mrsync_save_config>
-						<class>mrsync/observer</class>
-						<method>saveConfig</method>
-					</mrsync_save_config>
-				</observers>
-			
-			</admin_system_config_changed_section_mrsync>
-		</events>
-	</adminhtml>
+        <events>
+            <admin_system_config_changed_section_mrsync>
+                <observers>
+                    <mrsync_save_config>
+                        <class>mrsync/observer</class>
+                        <method>saveConfig</method>
+                    </mrsync_save_config>
+                </observers>
 
-	<global>
-		<helpers>
-			<mrsync>
-				<class>Mailrelay_Mrsync_Helper</class>
-			</mrsync>
-		</helpers>
-		<models>
-			<mrsync>
-				<class>Mailrelay_Mrsync_Model</class>
-				<resourceModel>mrsync_mysql4</resourceModel>
-			</mrsync>
+            </admin_system_config_changed_section_mrsync>
+        </events>
+    </adminhtml>
 
-			<core>
-				<rewrite>
-					<email_template>Mailrelay_Mrsync_Model_Core_Email_Template</email_template>
-				</rewrite>
-			</core>
-		</models>
+    <global>
+        <helpers>
+            <mrsync>
+                <class>Mailrelay_Mrsync_Helper</class>
+            </mrsync>
+        </helpers>
+        <models>
+            <mrsync>
+                <class>Mailrelay_Mrsync_Model</class>
+                <resourceModel>mrsync_mysql4</resourceModel>
+            </mrsync>
 
-		<events>
-			<customer_save_after>
-				<observers>
-					<mailrelay_update_customer>
-						<class>mrsync/observer</class>
-						<method>updateCustomer</method>
-					</mailrelay_update_customer>
-				</observers>
-			</customer_save_after>
+            <core>
+                <rewrite>
+                    <email_template>Mailrelay_Mrsync_Model_Core_Email_Template</email_template>
+                </rewrite>
+            </core>
+        </models>
 
-			<newsletter_subscriber_save_before>
-				<observers>
-					<mailrelay_subscribe_observer>
-						<class>mrsync/observer</class>
-						<method>handleSubscriber</method>
-					</mailrelay_subscribe_observer>
-				</observers>
-			</newsletter_subscriber_save_before>
+        <events>
+            <customer_save_after>
+                <observers>
+                    <mailrelay_update_customer>
+                        <class>mrsync/observer</class>
+                        <method>updateCustomer</method>
+                    </mailrelay_update_customer>
+                </observers>
+            </customer_save_after>
 
-			<newsletter_subscriber_delete_after>
-				<observers>
-					<mailrelay_subscribe_delete_observer>
-						<class>mrsync/observer</class>
-						<method>handleSubscriberDeletion</method>
-					</mailrelay_subscribe_delete_observer>
-				</observers>
-			</newsletter_subscriber_delete_after>
-		</events>
+            <newsletter_subscriber_save_before>
+                <observers>
+                    <mailrelay_subscribe_observer>
+                        <class>mrsync/observer</class>
+                        <method>handleSubscriber</method>
+                    </mailrelay_subscribe_observer>
+                </observers>
+            </newsletter_subscriber_save_before>
 
-		<blocks>
-			<mrsync>
-				<class>Mailrelay_Mrsync_Block</class>
-			</mrsync>
-		</blocks>
-	</global>
+            <newsletter_subscriber_delete_after>
+                <observers>
+                    <mailrelay_subscribe_delete_observer>
+                        <class>mrsync/observer</class>
+                        <method>handleSubscriberDeletion</method>
+                    </mailrelay_subscribe_delete_observer>
+                </observers>
+            </newsletter_subscriber_delete_after>
+        </events>
+
+        <blocks>
+            <mrsync>
+                <class>Mailrelay_Mrsync_Block</class>
+            </mrsync>
+        </blocks>
+    </global>
 </config>

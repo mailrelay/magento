@@ -14,61 +14,62 @@ class Mailrelay_Mrsync_Model_Observer
          */
         public function handleSubscriber(Varien_Event_Observer $observer)
         {
-		// check if we have the autosync
-		$autosync = Mage::getStoreConfig("mrsync/mrsync/autosync_users");
-		if ($autosync)
-		{
-			// read subscriber data
-			$subscriber = $observer->getEvent()->getSubscriber();
+        // check if we have the autosync
+        $autosync = Mage::getStoreConfig("mrsync/mrsync/autosync_users");
+        if ($autosync)
+        {
+            // read subscriber data
+            $subscriber = $observer->getEvent()->getSubscriber();
 
-			if ($subscriber)
-			{
-				$subscriber->setImportMode(TRUE);
+            if ($subscriber)
+            {
+                $subscriber->setImportMode(TRUE);
 
-				// read groups
-				$groups = Mage::getStoreConfig("mrsync/mrsync/sync_groups");
-				$mrsync_groups = array();
-				$set = explode(",", $groups);
-				foreach($set as $item)
-				{
-					$mrsync_groups[$item] = $item;
-				}
+                // read groups
+                $groups = Mage::getStoreConfig("mrsync/mrsync/sync_groups");
+                $mrsync_groups = array();
+                $set = explode(",", $groups);
+                foreach($set as $item)
+                {
+                    $mrsync_groups[$item] = $item;
+                }
 
-				$name = $subscriber->getName();
-				$email = $subscriber->getEmail();
+                $name = $subscriber->getName();
+                $email = $subscriber->getEmail();
 
-				// sync only that user
-				$model = Mage::getModel("mrsync/mrsync");
+                // sync only that user
+                $model = Mage::getModel("mrsync/mrsync");
 
-				// check if customer exists in mailrelay
-                        	$mruser = $model->getUser($userinfo["email"]);
-                        	if ($mruser->email == $email)
-                        	{
-					// check status
-					if ($subscriber->getStatus()==Mage_Newsletter_Model_Subscriber::STATUS_UNSUBSCRIBED)
-					{
-						// remove user
-						$model->removeMailrelayUser($mruser->email);
-					}
-					else
-					{
-	                                	// update user
-	                                	$model->updateMailrelayUser( $mruser->id, $email, $name, $mrsync_groups );
-					}
-                        	}
-                        	else
-                        	{
-					if ($subscriber->getStatus()!=Mage_Newsletter_Model_Subscriber::STATUS_UNSUBSCRIBED)
-					{
-                                		// add user
-                                		$model->addMailrelayUser($email, $name, $mrsync_groups);
-					}
-                        	}
+                // check if customer exists in mailrelay
+                            //$mruser = $model->getUser($userinfo["email"]);
+                            $mruser = $model->getUser($email);
+                            if ($mruser->email == $email)
+                            {
+                    // check status
+                    if ($subscriber->getStatus()==Mage_Newsletter_Model_Subscriber::STATUS_UNSUBSCRIBED)
+                    {
+                        // remove user
+                        $model->removeMailrelayUser($mruser->email);
+                    }
+                    else
+                    {
+                                        // update user
+                                        $model->updateMailrelayUser( $mruser->id, $email, $name, $mrsync_groups );
+                    }
+                            }
+                            else
+                            {
+                    if ($subscriber->getStatus()!=Mage_Newsletter_Model_Subscriber::STATUS_UNSUBSCRIBED)
+                    {
+                                        // add user
+                                        $model->addMailrelayUser($email, $name, $mrsync_groups);
+                    }
+                            }
 
-			}
-		}
+            }
+        }
 
-	}
+    }
 
         /**
          * Handle save of System -> Configuration, section <monkey>
@@ -81,36 +82,27 @@ class Mailrelay_Mrsync_Model_Observer
                 $post   = Mage::app()->getRequest()->getPost();
                 $request = Mage::app()->getRequest();
 
-		// validate user and password
-		$user = $post["groups"]["mrsync"]["fields"]["sync_user"]["value"];
-		$password = $post["groups"]["mrsync"]["fields"]["sync_pass"]["value"];
-		$host = $post["groups"]["mrsync"]["fields"]["sync_host"]["value"];
-		$groups = $post["groups"]["mrsync"]["fields"]["sync_groups"]["value"];
+        // validate user and password
+        $host = $post["groups"]["mrsync"]["fields"]["sync_host"]["value"];
+        $apiKey = $post["groups"]["mrsync"]["fields"]["sync_api_key"]["value"];
+        $groups = $post["groups"]["mrsync"]["fields"]["sync_groups"]["value"];
 
-                //Check if the api key exist
-		$model = Mage::getModel("mrsync/mrsync");
-		$model->initCurl($host);
-		$api = $model->getApiKey($user, $password);
+        if ($host != '') {
+            $validate = new Zend_Validate_Hostname();
+            if (!$validate->isValid($host)) {
+                $message = Mage::helper('mrsync')->__('Invalid host.');
+                throw new Exception($message);
+            }
+        }
 
-		if (!$api)
-		{
-			// error about API
-                        $message = Mage::helper('mrsync')->__('There is a problem with your Mailrelay sync data. Please check that the Mailrelay settings are correct, and that you have generated a valid API key');
-                        Mage::getSingleton('adminhtml/session')->addError($message);
-			return $observer;
-                }
-		else
-		{
-			// check groups
-			if (!is_array($groups) || count($groups)<=0)
-			{
-	                        $message = Mage::helper('mrsync')->__('You must choose at least one group to sync');
-        	                Mage::getSingleton('adminhtml/session')->addError($message);
-				return $observer;
+        if (!is_array($groups) || count($groups)<=0)
+        {
+            $message = Mage::helper('mrsync')->__('You must choose at least one group to sync');
+            Mage::getSingleton('adminhtml/session')->addError($message);
+            return $observer;
 
-			}
-		}
-	}
+        }
+    }
 
         /**
          * Update customer after_save event observer
@@ -118,43 +110,44 @@ class Mailrelay_Mrsync_Model_Observer
          * @param Varien_Event_Observer $observer
          * @return void|Varien_Event_Observer
          */
-	public function updateCustomer(Varien_Event_Observer $observer)
-	{
-		// check if we have the autosync
-		$autosync = Mage::getStoreConfig("mrsync/mrsync/autosync_users");
-		if ($autosync)
-		{
-			// read customer data and update it
-			$customer = $observer->getEvent()->getCustomer();
+    public function updateCustomer(Varien_Event_Observer $observer)
+    {
+        // check if we have the autosync
+        $autosync = Mage::getStoreConfig("mrsync/mrsync/autosync_users");
+        if ($autosync)
+        {
+            // read customer data and update it
+            $customer = $observer->getEvent()->getCustomer();
 
-			if ($customer)
-			{
-				// read groups
-				$groups = Mage::getStoreConfig("mrsync/mrsync/sync_groups");
-				$mrsync_groups = array();
-				$set = explode(",", $groups);
-				foreach($set as $item)
-				{
-					$mrsync_groups[$item] = $item;
-				}
+            if ($customer)
+            {
+                // read groups
+                $groups = Mage::getStoreConfig("mrsync/mrsync/sync_groups");
+                $mrsync_groups = array();
+                $set = explode(",", $groups);
+                foreach($set as $item)
+                {
+                    $mrsync_groups[$item] = $item;
+                }
 
-				$name = $customer->getName();
-				$email = $customer->getEmail();
+                $name = $customer->getName();
+                $email = $customer->getEmail();
 
-				// sync only that user
-				$model = Mage::getModel("mrsync/mrsync");
+                // sync only that user
+                $model = Mage::getModel("mrsync/mrsync");
 
-				// check if customer exists in mailrelay
-                        	$mruser = $model->getUser($userinfo["email"]);
-                        	if ($mruser->email == $email)
-                        	{
-                                	// update user
-                                	$model->updateMailrelayUser( $mruser->id, $email, $name, $mrsync_groups );
-                        	}
+                // check if customer exists in mailrelay
+                            //$mruser = $model->getUser($userinfo["email"]);
+                            $mruser = $model->getUser($email);
+                            if ($mruser->email == $email)
+                            {
+                                    // update user
+                                    $model->updateMailrelayUser( $mruser->id, $email, $name, $mrsync_groups );
+                            }
 
-			}
-		}
-	}
+            }
+        }
+    }
 
         /**
          * Handle Subscriber deletion from Magento, unsubcribes email from MailChimp
@@ -168,38 +161,39 @@ class Mailrelay_Mrsync_Model_Observer
 die("here");
                 $subscriber->setImportMode(TRUE);
 
-		// check if we have the autosync
-		$autosync = Mage::getStoreConfig("mrsync/mrsync/autosync_users");
-		if ($autosync)
-		{
-                	$subscriber = $observer->getEvent()->getSubscriber();
+        // check if we have the autosync
+        $autosync = Mage::getStoreConfig("mrsync/mrsync/autosync_users");
+        if ($autosync)
+        {
+                    $subscriber = $observer->getEvent()->getSubscriber();
 
-			if ($subscriber)
-			{
-				// read groups
-				$groups = Mage::getStoreConfig("mrsync/mrsync/sync_groups");
-				$mrsync_groups = array();
-				$set = explode(",", $groups);
-				foreach($set as $item)
-				{
-					$mrsync_groups[$item] = $item;
-				}
+            if ($subscriber)
+            {
+                // read groups
+                $groups = Mage::getStoreConfig("mrsync/mrsync/sync_groups");
+                $mrsync_groups = array();
+                $set = explode(",", $groups);
+                foreach($set as $item)
+                {
+                    $mrsync_groups[$item] = $item;
+                }
 
-				$email = $customer->getEmail();
+                $email = $customer->getEmail();
 
-				// sync only that user
-				$model = Mage::getModel("mrsync/mrsync");
+                // sync only that user
+                $model = Mage::getModel("mrsync/mrsync");
 
-				// check if customer exists in mailrelay
-                        	$mruser = $model->getUser($userinfo["email"]);
-                        	if ($mruser->email == $email)
-                        	{
-                                	// delete user
-                                	$model->removeMailrelayUser( $mruser->email );
-                        	}
+                // check if customer exists in mailrelay
+                            //$mruser = $model->getUser($userinfo["email"]);
+                            $mruser = $model->getUser($email);
+                            if ($mruser->email == $email)
+                            {
+                                    // delete user
+                                    $model->removeMailrelayUser( $mruser->email );
+                            }
 
-			}
-		}
+            }
+        }
 
-	}
-}	
+    }
+}

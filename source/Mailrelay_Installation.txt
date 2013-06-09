@@ -1,0 +1,69 @@
+--------------------------------------------------------
+------ Installing MailRelay plugin for Magento -------
+--------------------------------------------------------
+
+The installation of the MailRelay plugin product for Magento is very simple. It only takes a few steps to do it.
+
+After installing the extension a new option "Customers -> Mailrelay sync users" appears, this option will let you sync all your Magento users with your Mailrelay account.
+This will save you time when syncing and organizing your users in groups.
+
+Let's start with the installation process:
+
+-------------------
+First required step
+-------------------
+
+The first step, in order for us to be able to use the extension, is to enable the API key of our Mailrelay account. For that we need to log in our Mailrelay account
+admin panel. Once we are there we will go to the "Settings" menu, then "API access". On that screen click on the "Generate new API key" button.
+It's not necessary for us to write down this key, once it's generated, the extension will be able to get it using your user and password data.
+
+----------------------------------------
+Upload the necessary files to the server
+----------------------------------------
+
+The Mailrelay plugins comes into a .tgz file. To upload it we will go to menu "System -> Magento Connect -> Magento Connect Manager". Then you click on the "Upload package file" option that will allow you to
+install a plugin from archive. A file box will appear where you can upload the mailrelay tgz file. The plugin will be uploaded to the System and installed.
+Please note that you have to give write access to your "app" folder.
+
+-------------------------
+Configuring the extension
+-------------------------
+
+Once the extension is installed we will have a new settings option. We will go to "System -> Configuration -> Customers -> Mailrelay Settings" option.
+Clicking on this option will take us to a form where we need to fill the following data:
+
+- Host (this can be found in your Mailrelay welcome email). Please note that the host must be entered without initial http://
+- API key (the API key generated for our Mailrelay account)
+- Groups to sync (the groups in your Mailrelay account, are only showing after the host and API key have been saved)
+- Automatically sync Magento users (it will add customers automatically)
+- Automatically remove Magento users (it will remove customers automatically)
+
+Once this data is successfully saved we can start the user sync.
+
+----------
+Sync users
+----------
+
+After the configuration, go to "Customers -> Mailrelay sync users" and we can select the groups of our Mailrelay account that must be sync with the Magento users. We will click them and will press the "Sync groups" button.
+
+We will see the following screen, that simply shows us the sync process. It shows the total users synced.
+
+[ NOTE: Depending on the number of users to sync, the process can take from some seconds to several minutes. ]
+
+---------
+Uninstall
+---------
+
+Uninstalling the extension is as easy as installing it. You only have to go to "System -> Magento Connect -> Magento Connect Manager".
+You must search for the Mailrelay module (Mrsync) and click on "Uninstall". Selecting this option, the extension will be disabled and deleted.
+
+----------------
+Additional notes
+----------------
+- This extension has been tested using Magento 1.7.0.2
+
+- This software is provided by the copyright holders and contributors "AS IS" and any express or implied warranties, including, but not limited to,
+the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright owner or contributors be liable for any direct,
+indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data or profits,
+or bussiness interruption) however caused and on any theory of liability, wether in contract, strict liability, or tort (including negligence or otherwise) arising in any
+way out of the use of this software, even if advised of the possibility of such damage.
