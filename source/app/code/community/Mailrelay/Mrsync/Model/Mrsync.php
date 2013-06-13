@@ -31,17 +31,17 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 
     public function initCurl()
     {
-        $host = Mage::getStoreConfig("mrsync/mrsync/sync_host");
+        $host = trim(Mage::getStoreConfig("mrsync/mrsync/sync_host"));
 
         if ($host)
         {
-            if (substr($host, 0, 7)!="http://") $url = "http://";
-            else $url = "";
-            $url = $url.$host."/ccm/admin/api/version/2/&type=json";
+            $url = 'https://'.$host."/ccm/admin/api/version/2/&type=json";
             $curl = curl_init($url);
 
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($curl, CURLOPT_POST, 1);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($curl, CURLOPT_SSLVERSION, 3);
 
             $headers = array(
                 'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
@@ -59,7 +59,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
             }
         }
 
-        $this->_apiKey = Mage::getStoreConfig("mrsync/mrsync/sync_api_key");
+        $this->_apiKey = trim(Mage::getStoreConfig("mrsync/mrsync/sync_api_key"));
     }
 
     /**
