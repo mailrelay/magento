@@ -97,7 +97,7 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
         if ($total<=0)
         {
             // show error
-            $url = Mage::helper("adminhtml")->getUrl("adminhtml/mrsync/startsync/", array("error"=>$this->__("No customers to sync")));
+            $url = Mage::helper("adminhtml")->getUrl("*/mrsync/index/key/", array("error"=>$this->__("No customers to sync")));
             $this->_redirectUrl($url);
         }
         else
