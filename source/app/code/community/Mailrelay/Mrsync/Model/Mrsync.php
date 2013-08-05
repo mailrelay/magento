@@ -3,6 +3,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 {
     protected $_curl;
     public $_apiKey;
+    public $_showHiddenGroups;
 
     protected function _construct()
     {
@@ -60,6 +61,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
         }
 
         $this->_apiKey = trim(Mage::getStoreConfig("mrsync/mrsync/sync_api_key"));
+        $this->_showHiddenGroups = Mage::getStoreConfig("mrsync/mrsync/show_hidden_groups");
     }
 
     /**
@@ -102,7 +104,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
             $groupSelect = array();
 
             foreach ( $rawGroups AS $group ) {
-                    if ( $group->enable == 1 AND $group->visible == 1) {
+                    if ( $group->enable == 1 && ($group->visible == 1 || $this->_showHiddenGroups == '1') ) {
                         $groupSelect[$group->id] = $group->name;
                     }
             }
@@ -125,7 +127,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
 
             $data = $this->APICall($params);
 
-            if ( ($data == NULL) || (!(count( $this->apiGroupsToArray( $data ) ) > 0)) )
+            if ( is_null($data) )
             {
                 return array();
             }

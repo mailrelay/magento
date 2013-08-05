@@ -41,6 +41,17 @@
                             <sort_order>2</sort_order>
                         </sync_api_key>
 
+                        <show_hidden_groups translate="Show hidden groups">
+                            <label>Show hidden groups</label>
+                            <comment>Show hidden groups from Mailrelay</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <sort_order>3</sort_order>
+                        </show_hidden_groups>
+
                         <autosync_users translate="Automatically sync Magento users">
                             <label>Automatically sync Magento users</label>
                             <comment>Check if you want that your Magento users are synced automatically with Mailrelay</comment>
@@ -49,7 +60,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <sort_order>8</sort_order>
+                            <sort_order>9</sort_order>
                         </autosync_users>
 
                         <autoremove_users translate="Automatically remove Magento users">
@@ -60,7 +71,7 @@
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
-                            <sort_order>9</sort_order>
+                            <sort_order>10</sort_order>
                         </autoremove_users>
 
                         <sync_groups translate="Groups to sync">

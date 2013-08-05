@@ -34,6 +34,7 @@ Clicking on this option will take us to a form where we need to fill the followi
 
 - Host (this can be found in your Mailrelay welcome email). Please note that the host must be entered without initial http://
 - API key (the API key generated for our Mailrelay account)
+- Show hidden groups (enable list the hidden groups from your Mailrelay account)
 - Groups to sync (the groups in your Mailrelay account, are only showing after the host and API key have been saved)
 - Automatically sync Magento users (it will add customers automatically)
 - Automatically remove Magento users (it will remove customers automatically)
