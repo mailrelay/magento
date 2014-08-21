@@ -123,19 +123,21 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
     {
         try
         {
-                    $host = Mage::getStoreConfig("mrsync/smtp/smtp_host");
-                    $user = Mage::getStoreConfig("mrsync/smtp/smtp_user");
-                    $pass = Mage::getStoreConfig("mrsync/smtp/smtp_password");
+            $host = Mage::getStoreConfig("mrsync/smtp/smtp_host");
+            $user = Mage::getStoreConfig("mrsync/smtp/smtp_user");
+            $pass = Mage::getStoreConfig("mrsync/smtp/smtp_password");
 
-                    $emailSmtpConf = array(
-                            'auth'=>'login',
-                            'username' => $user,
-                            'password' => $pass
-                    );
-                ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
-                ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
+            $smtpConfiguration = array(
+                'auth' => 'login',
+                'username' => $user,
+                'password' => $pass
+            );
 
-                    $transport = new Zend_Mail_Transport_Smtp(strtolower($host), $emailSmtpConf);
+            if (Mage::getStoreConfig("mrsync/smtp/use_alternative_port")) {
+                $smtpConfiguration['port'] = 2525;
+            }
+            
+            $transport = new Zend_Mail_Transport_Smtp(strtolower($host), $smtpConfiguration);
 
             // email config
             $default_email = Mage::getStoreConfig('trans_email/ident_general/email');
@@ -150,17 +152,16 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
 
             Zend_Mail::setDefaultTransport($transport);
 
-                    $mail->send($transport);
+            $mail->send($transport);
 
             // redirect to config
             $this->_getSession()->addSuccess(Mage::helper("mrsync")->__("A test email has been sent to your default Magento email address."));
-                        $this->_redirect("*/system_config/edit/section/mrsync");
-        }
-            catch (Exception $e) {
-                    $this->_mail = null;
+        } catch (Exception $e) {
+            $this->_mail = null;
             $this->_getSession()->addError($e->getMessage());
-                    Mage::logException($e);
-                        $this->_redirect("*/system_config/edit/section/mrsync");
-            }
+            Mage::logException($e);
+        }
+
+        $this->_redirect("*/system_config/edit/section/mrsync");
     }
 }

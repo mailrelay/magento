@@ -11,13 +11,17 @@ class Mailrelay_Mrsync_Model_Core_Email_Template extends Mage_Core_Model_Email_T
     /**
      * Send mail to recipient
      *
-     * @param   string      $email		  E-mail
+     * @param   string      $email        E-mail
      * @param   string|null $name         receiver name
      * @param   array       $variables    template variables
      * @return  boolean
      **/
 
     public function send($email, $name = null, array $variables = array()) {
+        if (!Mage::getStoreConfig("mrsync/smtp/smtp_enabled")) {
+            return parent::send($email, $name, $variables);
+        }
+
         if (!$this->isValidForSend()) {
             Mage::logException(new Exception('This letter cannot be sent.')); // translation is intentionally omitted
             return false;
@@ -35,28 +39,7 @@ class Mailrelay_Mrsync_Model_Core_Email_Template extends Mage_Core_Model_Email_T
         $variables['email'] = reset($emails);
         $variables['name'] = reset($names);
 
-        ini_set('SMTP', Mage::getStoreConfig('system/smtp/host'));
-        ini_set('smtp_port', Mage::getStoreConfig('system/smtp/port'));
-
         $mail = $this->getMail();
-
-        $setReturnPath = Mage::getStoreConfig(self::XML_PATH_SENDING_SET_RETURN_PATH);
-        switch ($setReturnPath) {
-            case 1:
-                $returnPathEmail = $this->getSenderEmail();
-                break;
-            case 2:
-                $returnPathEmail = Mage::getStoreConfig(self::XML_PATH_SENDING_RETURN_PATH_EMAIL);
-                break;
-            default:
-                $returnPathEmail = null;
-                break;
-        }
-
-        if ($returnPathEmail !== null) {
-            $mailTransport = new Zend_Mail_Transport_Sendmail("-f".$returnPathEmail);
-            Zend_Mail::setDefaultTransport($mailTransport);
-        }
 
         foreach ($emails as $key => $email) {
             $mail->addTo($email, '=?utf-8?B?' . base64_encode($names[$key]) . '?=');
@@ -74,31 +57,31 @@ class Mailrelay_Mrsync_Model_Core_Email_Template extends Mage_Core_Model_Email_T
         $mail->setSubject('=?utf-8?B?' . base64_encode($this->getProcessedTemplateSubject($variables)) . '?=');
         $mail->setFrom($this->getSenderEmail(), $this->getSenderName());
 
-        try 
-	{
-		$host = Mage::getStoreConfig("mrsync/smtp/smtp_host");
-		$user = Mage::getStoreConfig("mrsync/smtp/smtp_user");
-		$pass = Mage::getStoreConfig("mrsync/smtp/smtp_password");
+        try {
+            $host = Mage::getStoreConfig("mrsync/smtp/smtp_host");
+            $user = Mage::getStoreConfig("mrsync/smtp/smtp_user");
+            $pass = Mage::getStoreConfig("mrsync/smtp/smtp_password");
 
-            	$emailSmtpConf = array(
-			'auth'=>'login',
-                    	'username' => $user,
-                    	'password' => $pass
-            	);
+            $smtpConfiguration = array(
+                'auth' => 'login',
+                'username' => $user,
+                'password' => $pass
+            );
 
-            	$transport = new Zend_Mail_Transport_Smtp(strtolower($host), $emailSmtpConf);
+            if (Mage::getStoreConfig("mrsync/smtp/use_alternative_port")) {
+                $smtpConfiguration['port'] = 2525;
+            }
+            
+            $transport = new Zend_Mail_Transport_Smtp(strtolower($host), $smtpConfiguration);
 
-           	$mail->send($transport);
-            	$this->_mail = null;
-        }
-        catch (Exception $e) {
+            $mail->send($transport);
+            $this->_mail = null;
+        } catch (Exception $e) {
             $this->_mail = null;
             Mage::logException($e);
             return false;
         }
 
         return true;
-
     }
-
 }
