@@ -14,24 +14,37 @@
 <?php
 if ($this->error)
 {
-	?><h4 style="color:red"><?php echo $this->error; ?></h4><?php
+    ?><h4 style="color:red"><?php echo $this->error; ?></h4><?php
 }
 ?>
 
-	<fieldset>
+    <fieldset>
 
-	<h5 style="text-align:left;"><?php echo $this->__("Please select the groups to sync"); ?></h5><br />
-		<p><label for="customer_groups"><?php echo $this->__('Select the Magento groups to sync')?></label><br />
-                <select class="required-entry validate-select" name="customer_groups[]" id="customer_groups" multiple="true">
-			<?php
-			foreach($this->customer_groups as $group)
-			{
-				?><option value="<?php echo $group["value"]; ?>"><?php echo $group["label"]; ?></option><?php
-			}
-			?>
-		</select></p>
+    <h5 style="text-align:left;"><?php echo $this->__("Please select the groups/stores to sync"); ?></h5><br />
+        <p><label for="customer_groups"><?php echo $this->__('Select the Magento groups/stores to sync')?></label><br />
+                <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td width="13%"><select name="customer_groups[]" id="customer_groups" multiple="true">
+            <?php
+            foreach($this->customer_groups as $group)
+            {
+                ?><option value="<?php echo $group["value"]; ?>"><?php echo $group["label"]; ?></option><?php
+            }
+            ?>
+        </select></td>
+                        <td><select name="customer_stores[]" id="customer_stores" multiple="true">
+            <?php
+            foreach($this->customer_stores as $store)
+            {
+                ?><option value="<?php echo $store["value"]; ?>"><?php echo $store["label"]; ?></option><?php
+            }
+            ?>
+        </select></td>
+                    </tr>
+                </table>
+                </p>
 
-		<p><label for="mrsync_groups"><?php echo $this->__('Select the Mailrelay groups to sync to')?></label><br />
+        <p><label for="mrsync_groups"><?php echo $this->__('Select the Mailrelay groups to sync to')?></label><br />
                 <select class="required-entry validate-select" name="mrsync_groups[]" id="mrsync_groups" multiple="true">
                         <?php
                         foreach($this->mrsync_groups as $group)
