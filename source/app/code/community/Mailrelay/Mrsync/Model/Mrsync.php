@@ -42,7 +42,6 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($curl, CURLOPT_POST, 1);
 				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-				curl_setopt($curl, CURLOPT_SSLVERSION, 3);
 
             $headers = array(
                 'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
