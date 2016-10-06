@@ -158,7 +158,6 @@ class Mailrelay_Mrsync_Model_Observer
          */
         public function handleSubscriberDeletion(Varien_Event_Observer $observer)
         {
-die("here");
                 $subscriber->setImportMode(TRUE);
 
         // check if we have the autosync
