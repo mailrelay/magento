@@ -92,15 +92,6 @@
         </models>
 
         <events>
-            <customer_save_after>
-                <observers>
-                    <mailrelay_update_customer>
-                        <class>mrsync/observer</class>
-                        <method>updateCustomer</method>
-                    </mailrelay_update_customer>
-                </observers>
-            </customer_save_after>
-
             <newsletter_subscriber_save_before>
                 <observers>
                     <mailrelay_subscribe_observer>

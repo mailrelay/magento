@@ -105,51 +105,6 @@ class Mailrelay_Mrsync_Model_Observer
     }
 
         /**
-         * Update customer after_save event observer
-         *
-         * @param Varien_Event_Observer $observer
-         * @return void|Varien_Event_Observer
-         */
-    public function updateCustomer(Varien_Event_Observer $observer)
-    {
-        // check if we have the autosync
-        $autosync = Mage::getStoreConfig("mrsync/mrsync/autosync_users");
-        if ($autosync)
-        {
-            // read customer data and update it
-            $customer = $observer->getEvent()->getCustomer();
-
-            if ($customer)
-            {
-                // read groups
-                $groups = Mage::getStoreConfig("mrsync/mrsync/sync_groups");
-                $mrsync_groups = array();
-                $set = explode(",", $groups);
-                foreach($set as $item)
-                {
-                    $mrsync_groups[$item] = $item;
-                }
-
-                $name = $customer->getName();
-                $email = $customer->getEmail();
-
-                // sync only that user
-                $model = Mage::getModel("mrsync/mrsync");
-
-                // check if customer exists in mailrelay
-                            //$mruser = $model->getUser($userinfo["email"]);
-                            $mruser = $model->getUser($email);
-                            if ($mruser->email == $email)
-                            {
-                                    // update user
-                                    $model->updateMailrelayUser( $mruser->id, $email, $name, $mrsync_groups );
-                            }
-
-            }
-        }
-    }
-
-        /**
          * Handle Subscriber deletion from Magento, unsubcribes email from MailChimp
          * and sends the delete_member flag so the subscriber gets deleted.
          *
