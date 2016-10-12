@@ -31,8 +31,11 @@ class Mailrelay_Mrsync_Model_Observer
                     $mrsync_groups[$item] = $item;
                 }
 
-                if (!empty(Mage::app()->getRequest()->getPost('firstname')) || !empty(Mage::app()->getRequest()->getPost('lastname'))) {
-                    $name = (string) Mage::app()->getRequest()->getPost('firstname') .' '. (string) Mage::app()->getRequest()->getPost('lastname');
+                $firstname = Mage::app()->getRequest()->getPost('firstname');
+                $lastname = Mage::app()->getRequest()->getPost('lastname');
+
+                if (!empty($firstname) || !empty($lastname)) {
+                    $name = $firstname .' '. $lastname;
                 } else {
                     $name = null;
                 }
