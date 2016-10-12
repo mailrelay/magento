@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Changelog based on http://keepachangelog.com/ format.
+- Compatibility with PHP 7.
 
 ### Fixed
 - Remove debug code that would halt execution.

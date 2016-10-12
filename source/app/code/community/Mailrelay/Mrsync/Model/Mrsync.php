@@ -15,13 +15,11 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
      * Checks if a valid curl conection has been stablished
      *
      * @param curl $curl
+     * @return boolean
      */
-    public function checkCurlInit(curl $curl)
+    public function checkCurlInit($curl)
     {
-        if ($curl == null) {
-            return false;
-        }
-        return true;
+        return !is_null($curl);
     }
 
     public function getExtensionVersion()
