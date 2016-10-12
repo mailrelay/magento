@@ -12,18 +12,17 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
     }
 
     /**
-    * Checks if a valid curl conection has been stablished
-    *
-    * @param curl $curl
-    */
-    public function checkCurlInit( curl $curl )
+     * Checks if a valid curl conection has been stablished
+     *
+     * @param curl $curl
+     */
+    public function checkCurlInit(curl $curl)
     {
-            if ( $curl == null )
-        {
+        if ($curl == null) {
             return false;
         }
         return true;
-        }
+    }
 
     public function getExtensionVersion()
     {
@@ -39,22 +38,19 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
             $url = 'https://'.$host."/ccm/admin/api/version/2/&type=json";
             $curl = curl_init($url);
 
-                curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($curl, CURLOPT_POST, 1);
-				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
             $headers = array(
-                'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
+                'X-Request-Origin: Magento|'. $this->getExtensionVersion(). '|'. Mage::getVersion()
             );
             curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-                $result = $this->checkCurlInit( $curl );
-            if ($result)
-            {
-                    $this->_curl = $curl;
-            }
-            else
-            {
+            $result = $this->checkCurlInit($curl);
+            if ($result) {
+                $this->_curl = $curl;
+            } else {
                 $this->_curl = "";
             }
         }
@@ -64,86 +60,81 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
     }
 
     /**
-    * Executes an API call against the API
-    *
-    * @param array $params Array with the API methods to execute
-    * @return object
-    */
-    public function APICall( $params = array(), $apiKey = NULL )
+     * Executes an API call against the API
+     *
+     * @param array $params Array with the API methods to execute
+     * @return object
+     */
+    public function APICall($params = array(), $apiKey = NULL)
     {
-            if ( $apiKey == NULL ) {
-                    $params['apiKey'] = $this->_apiKey;
-            } else {
-                    $params['apiKey'] = $apiKey;
-            }
-            curl_setopt( $this->_curl, CURLOPT_POSTFIELDS, $params );
-                $headers = array(
-            'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
-                );
-                curl_setopt($this->_curl, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec( $this->_curl );
-            $jsonResult = json_decode($result);
-
-            if ($jsonResult->status) {
-                    return $jsonResult->data;
-            } else {
-                    return NULL;
-            }
+        if ( $apiKey == NULL ) {
+            $params['apiKey'] = $this->_apiKey;
+        } else {
+            $params['apiKey'] = $apiKey;
         }
 
-    /**
-    * Prepare a json of groups obtained from the API and turn it into an array
-    *
-         * @param json $rawGroups A json of groups obtained from the API
-         * @return array
-         */
-        public function apiGroupsToArray( $rawGroups )
-        {
-            $groupSelect = array();
+        curl_setopt( $this->_curl, CURLOPT_POSTFIELDS, $params );
+        $headers = array(
+            'X-Request-Origin: Magento|'. $this->getExtensionVersion(). '|'. Mage::getVersion()
+        );
+        curl_setopt($this->_curl, CURLOPT_HTTPHEADER, $headers);
 
-            foreach ( $rawGroups AS $group ) {
-                    if ( $group->enable == 1 && ($group->visible == 1 || $this->_showHiddenGroups == '1') ) {
-                        $groupSelect[$group->id] = $group->name;
-                    }
-            }
-            return $groupSelect;
+        $result = curl_exec($this->_curl);
+        $jsonResult = json_decode($result);
+
+        if ($jsonResult->status) {
+            return $jsonResult->data;
+        } else {
+            return NULL;
+        }
     }
 
     /**
-         * Get MR groups
-         *
-         * @return object
-         */
+     * Prepare a json of groups obtained from the API and turn it into an array
+     *
+     * @param json $rawGroups A json of groups obtained from the API
+     * @return array
+     */
+    public function apiGroupsToArray($rawGroups)
+    {
+        $groupSelect = array();
+
+        foreach ( $rawGroups AS $group ) {
+            if ( $group->enable == 1 && ($group->visible == 1 || $this->_showHiddenGroups == '1') ) {
+                $groupSelect[$group->id] = $group->name;
+            }
+        }
+        return $groupSelect;
+    }
+
+    /**
+     * Get MR groups
+     *
+     * @return object
+     */
     public function getGroups()
     {
-        if ($this->_apiKey)
-        {
+        if ($this->_apiKey) {
             $params = array(
-                        'function' => 'getGroups',
-                        'apiKey' => $this->_apiKey
-                );
+                'function' => 'getGroups',
+                'apiKey' => $this->_apiKey
+            );
 
             $data = $this->APICall($params);
 
-            if ( is_null($data) )
-            {
+            if (is_null($data)) {
                 return array();
-            }
-                else {
-                $groups = $this->apiGroupsToArray( $data );
+            } else {
+                $groups = $this->apiGroupsToArray($data);
                 $totales = array();
-                foreach($groups as $key=>$value)
-                {
-                    $item["value"]=$key;
-                    $item["label"]=$value;
+                foreach($groups as $key => $value) {
+                    $item["value"] = $key;
+                    $item["label"] = $value;
                     $totales[] = $item;
                 }
                 return $totales;
-                }
-        }
-        else
-        {
+            }
+        } else {
             // invalid API key
             return false;
         }
@@ -153,14 +144,16 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
     public function getUser($email)
     {
         $params = array(
-                    'function' => 'getSubscribers',
-                'email'=>$email,
-                'apiKey'=>$this->_apiKey
-            );
-                $data = $this->APICall($params);
-        if ($data==NULL) return new StdClass;
-        else return $data[0];
-
+            'function' => 'getSubscribers',
+            'email'=>$email,
+            'apiKey'=>$this->_apiKey
+        );
+        $data = $this->APICall($params);
+        if ($data == NULL) {
+            return new StdClass;  
+        } else {
+            return $data[0];
+        }
     }
 
     /**
@@ -175,28 +168,27 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
     public function updateMailrelayUser($user_id, $user_email, $user_name, array $user_groups=array())
     {
         $params = array(
-                    'function' => 'updateSubscriber',
-                    'apiKey' => $this->_apiKey,
-                    'id' => $user_id,
-                    'email' => $user_email,
-                    'name' => $user_name,
-                    'groups' => $user_groups
-                );
+            'function' => 'updateSubscriber',
+            'apiKey' => $this->_apiKey,
+            'id' => $user_id,
+            'email' => $user_email,
+            'name' => $user_name,
+            'groups' => $user_groups
+        );
 
-                $post = http_build_query($params);
-                curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
-                $headers = array(
-                    'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
-                );
-                curl_setopt($this->_curl, CURLOPT_HTTPHEADER, $headers);
+        $post = http_build_query($params);
+        curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
+        $headers = array(
+            'X-Request-Origin: Magento|'. $this->getExtensionVersion() .'|'. Mage::getVersion()
+        );
+        curl_setopt($this->_curl, CURLOPT_HTTPHEADER, $headers);
 
-                $result = curl_exec($this->_curl);
-                $jsonResult = json_decode($result);
+        $result = curl_exec($this->_curl);
+        $jsonResult = json_decode($result);
 
-                if ( $jsonResult->status ) {
+        if ($jsonResult->status) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -210,22 +202,22 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
     public function removeMailrelayUser($email)
     {
         $params = array(
-                    'function' => 'deleteSubscriber',
-                    'apiKey' => $this->_apiKey,
-                    'email' => $email
-                );
+            'function' => 'deleteSubscriber',
+            'apiKey' => $this->_apiKey,
+            'email' => $email
+        );
 
-                $post = http_build_query($params);
-                curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
-                $headers = array(
-                    'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
-                );
-                curl_setopt($this->_curl, CURLOPT_HTTPHEADER, $headers);
+        $post = http_build_query($params);
+        curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
+        $headers = array(
+            'X-Request-Origin: Magento|'. $this->getExtensionVersion(). '|'. Mage::getVersion()
+        );
+        curl_setopt($this->_curl, CURLOPT_HTTPHEADER, $headers);
 
-                $result = curl_exec($this->_curl);
-                $jsonResult = json_decode($result);
+        $result = curl_exec($this->_curl);
+        $jsonResult = json_decode($result);
 
-                if ( $jsonResult->status ) {
+        if ( $jsonResult->status ) {
             return 1;
         }
         else {
@@ -241,28 +233,28 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
      * @param array $groups Selected groups to sync the user to
      * return integer
      */
-    public function addMailrelayUser( $email = '', $username = '', array $groups = array())
+    public function addMailrelayUser($email = '', $username = '', array $groups = array())
     {
         $params = array(
-                'function' => 'addSubscriber',
-                'apiKey' => $this->_apiKey,
-                'email' => $email,
-                'name' => $username,
-                'groups' => $groups
-            );
+            'function' => 'addSubscriber',
+            'apiKey' => $this->_apiKey,
+            'email' => $email,
+            'name' => $username,
+            'groups' => $groups
+        );
 
-            $post = http_build_query($params);
-            curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
-            $headers = array(
-                'X-Request-Origin: Magento|'.$this->getExtensionVersion().'|'.Mage::getVersion()
-            );
-            curl_setopt($this->_curl, CURLOPT_HTTPHEADER, $headers);
+        $post = http_build_query($params);
+        curl_setopt($this->_curl, CURLOPT_POSTFIELDS, $post);
+        $headers = array(
+            'X-Request-Origin: Magento|'. $this->getExtensionVersion(). '|'. Mage::getVersion()
+        );
+        curl_setopt($this->_curl, CURLOPT_HTTPHEADER, $headers);
 
-            $result = curl_exec($this->_curl);
-            $jsonResult = json_decode($result);
+        $result = curl_exec($this->_curl);
+        $jsonResult = json_decode($result);
 
-            if ( $jsonResult->status ) {
-                return 1;
+        if ($jsonResult->status) {
+            return 1;
         } else {
             return 0;
         }

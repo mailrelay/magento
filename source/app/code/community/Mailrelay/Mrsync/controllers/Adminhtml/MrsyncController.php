@@ -7,11 +7,10 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
         $model = Mage::getModel("mrsync/mrsync");
         $api = Mage::getStoreConfig("mrsync/mrsync/sync_api_key");
 
-                if (!$api)
-                {
-                        $this->_getSession()->addError(Mage::helper("mrsync")->__("There has been an error with your Mailrelay sync settings. Please check that they are correct"));
-                        $this->_redirect("*/system_config/edit/section/mrsync");
-                }
+        if (!$api) {
+            $this->_getSession()->addError(Mage::helper("mrsync")->__("There has been an error with your Mailrelay sync settings. Please check that they are correct"));
+            $this->_redirect("*/system_config/edit/section/mrsync");
+        }
 
         $this->loadLayout();
         $this->_setActiveMenu("customer/mrsync");
@@ -23,8 +22,7 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
         $all_groups = $customer_group->getCollection()->toOptionHash();
 
         $groups = array();
-        foreach($all_groups as $key=>$group)
-        {
+        foreach($all_groups as $key=>$group) {
             $groups[$key] = array("value"=>$key, "label"=>$group);
         }
         $stores = array();
@@ -43,16 +41,14 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
         $model = Mage::getModel("mrsync/mrsync");
         $groups = $model->getGroups();
         $final = array();
-        foreach($groups as $group)
-        {
+        foreach($groups as $group) {
             $final[] = array("label"=>$group["label"], "value"=>$group["value"]);
         }
         $block->setData("mrsync_groups", $final);
 
         // check if we have error
         $error = Mage::app()->getRequest()->getParam("error");
-        if ($error)
-        {
+        if ($error) {
             $block->setData("error", $error);
         }
 
@@ -63,15 +59,14 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
     protected function syncCustomers($customer_groups, $mrsync_groups)
     {
         // get the customers in that groups
-                $customers = Mage::getModel("customer/customer")
-                        ->getCollection()
-                        ->addAttributeToFilter("group_id", array("in"=>$customer_groups))
+        $customers = Mage::getModel("customer/customer")
+            ->getCollection()
+            ->addAttributeToFilter("group_id", array("in"=>$customer_groups))
             ->addAttributeToSelect("*");
 
-                $mrsync_model = Mage::getModel("mrsync/mrsync");
+        $mrsync_model = Mage::getModel("mrsync/mrsync");
 
-        foreach($customers as $customer)
-        {
+        foreach($customers as $customer) {
             $subscriber = Mage::getModel('newsletter/subscriber')->loadByCustomer($customer);
 
             if ($subscriber->isSubscribed()) {
@@ -80,13 +75,10 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
 
                 // check if customer exists in mailrelay
                 $mruser = $mrsync_model->getUser($userinfo["email"]);
-                if ($mruser->email == $userinfo["email"])
-                {
+                if ($mruser->email == $userinfo["email"]) {
                     // update user
                     $this->_syncedUpdatedUsers += $mrsync_model->updateMailrelayUser( $mruser->id, $userinfo['email'], $userinfo['name'], $mrsync_groups );
-                }
-                else
-                {
+                } else {
                     // add user
                     $this->_syncedNewUsers += $mrsync_model->addMailrelayUser($userinfo["email"], $userinfo["name"], $mrsync_groups);
                 }
@@ -99,15 +91,14 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
     protected function syncCustomersByStore($customer_stores, $mrsync_groups)
     {
         // get the customers in that groups
-                $customers = Mage::getModel("customer/customer")
-                        ->getCollection()
-                        ->addAttributeToFilter("entity_id", array("in"=>$customer_stores))
+        $customers = Mage::getModel("customer/customer")
+            ->getCollection()
+            ->addAttributeToFilter("entity_id", array("in"=>$customer_stores))
             ->addAttributeToSelect("*");
 
-                $mrsync_model = Mage::getModel("mrsync/mrsync");
+        $mrsync_model = Mage::getModel("mrsync/mrsync");
 
-        foreach($customers as $customer)
-        {
+        foreach($customers as $customer) {
             $subscriber = Mage::getModel('newsletter/subscriber')->loadByCustomer($customer);
 
             if ($subscriber->isSubscribed()) {
@@ -116,13 +107,10 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
 
                 // check if customer exists in mailrelay
                 $mruser = $mrsync_model->getUser($userinfo["email"]);
-                if ($mruser->email == $userinfo["email"])
-                {
+                if ($mruser->email == $userinfo["email"]) {
                     // update user
                     $this->_syncedUpdatedUsers += $mrsync_model->updateMailrelayUser( $mruser->id, $userinfo['email'], $userinfo['name'], $mrsync_groups );
-                }
-                else
-                {
+                } else {
                     // add user
                     $this->_syncedNewUsers += $mrsync_model->addMailrelayUser($userinfo["email"], $userinfo["name"], $mrsync_groups);
                 }
@@ -188,8 +176,7 @@ class Mailrelay_Mrsync_Adminhtml_MrsyncController extends Mage_Adminhtml_Control
 
     public function testAction()
     {
-        try
-        {
+        try {
             $host = Mage::getStoreConfig("mrsync/smtp/smtp_host");
             $user = Mage::getStoreConfig("mrsync/smtp/smtp_user");
             $pass = Mage::getStoreConfig("mrsync/smtp/smtp_password");

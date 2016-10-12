@@ -164,10 +164,6 @@
                     </fields>
                 </smtp>
             </groups>
-
-
         </mrsync>
     </sections>
-
-
 </config>

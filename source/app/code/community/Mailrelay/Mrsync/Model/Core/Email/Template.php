@@ -6,7 +6,8 @@
  * Use at your own risk
  *
  */
-class Mailrelay_Mrsync_Model_Core_Email_Template extends Mage_Core_Model_Email_Template {
+class Mailrelay_Mrsync_Model_Core_Email_Template extends Mage_Core_Model_Email_Template
+{
 
     /**
      * Send mail to recipient
@@ -17,7 +18,8 @@ class Mailrelay_Mrsync_Model_Core_Email_Template extends Mage_Core_Model_Email_T
      * @return  boolean
      **/
 
-    public function send($email, $name = null, array $variables = array()) {
+    public function send($email, $name = null, array $variables = array())
+    {
         if (!Mage::getStoreConfig("mrsync/smtp/smtp_enabled")) {
             return parent::send($email, $name, $variables);
         }

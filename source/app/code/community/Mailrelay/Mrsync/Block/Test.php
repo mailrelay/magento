@@ -8,11 +8,11 @@ class Mailrelay_Mrsync_Block_Test extends Mage_Adminhtml_Block_System_Config_For
         $url = $this->getUrl('adminhtml/mrsync/test');
 
         $html = $this->getLayout()->createBlock('adminhtml/widget_button')
-                    ->setType('button')
-                    ->setClass('scalable')
-                    ->setLabel('Check SMTP settings')
-		    ->setOnClick("setLocation('$url')")
-                    ->toHtml();
+            ->setType('button')
+            ->setClass('scalable')
+            ->setLabel('Check SMTP settings')
+            ->setOnClick("setLocation('$url')")
+            ->toHtml();
 
         return $html;
     }
