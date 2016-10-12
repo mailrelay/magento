@@ -34,7 +34,12 @@ class Mailrelay_Mrsync_Model_Observer
                     $mrsync_groups[$item] = $item;
                 }
 
-                $name = $subscriber->getName();
+                if (!empty(Mage::app()->getRequest()->getPost('firstname')) || !empty(Mage::app()->getRequest()->getPost('lastname'))) {
+                    $name = (string) Mage::app()->getRequest()->getPost('firstname') .' '. (string) Mage::app()->getRequest()->getPost('lastname');
+                } else {
+                    $name = null;
+                }
+
                 $email = $subscriber->getEmail();
 
                 // sync only that user
