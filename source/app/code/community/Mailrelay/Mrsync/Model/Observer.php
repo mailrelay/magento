@@ -53,9 +53,7 @@ class Mailrelay_Mrsync_Model_Observer
                         // update user
                         $model->updateMailrelayUser( $mruser->id, $email, $name, $mrsync_groups );
                     }
-                }
-                else
-                {
+                } else {
                     if ($subscriber->getStatus() != Mage_Newsletter_Model_Subscriber::STATUS_UNSUBSCRIBED) {
                         // add user
                         $model->addMailrelayUser($email, $name, $mrsync_groups);
@@ -75,7 +73,7 @@ class Mailrelay_Mrsync_Model_Observer
      */
     public function saveConfig(Varien_Event_Observer $observer)
     {
-        $post   = Mage::app()->getRequest()->getPost();
+        $post = Mage::app()->getRequest()->getPost();
         $request = Mage::app()->getRequest();
 
         // validate user and password
@@ -134,7 +132,6 @@ class Mailrelay_Mrsync_Model_Observer
                     // delete user
                     $model->removeMailrelayUser($mruser->email);
                 }
-
             }
         }
     }

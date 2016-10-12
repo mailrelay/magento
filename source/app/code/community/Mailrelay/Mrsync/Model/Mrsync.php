@@ -33,8 +33,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
     {
         $host = trim(Mage::getStoreConfig("mrsync/mrsync/sync_host"));
 
-        if ($host)
-        {
+        if ($host) {
             $url = 'https://'.$host."/ccm/admin/api/version/2/&type=json";
             $curl = curl_init($url);
 
@@ -67,7 +66,7 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
      */
     public function APICall($params = array(), $apiKey = NULL)
     {
-        if ( $apiKey == NULL ) {
+        if ($apiKey == NULL) {
             $params['apiKey'] = $this->_apiKey;
         } else {
             $params['apiKey'] = $apiKey;
@@ -99,8 +98,8 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
     {
         $groupSelect = array();
 
-        foreach ( $rawGroups AS $group ) {
-            if ( $group->enable == 1 && ($group->visible == 1 || $this->_showHiddenGroups == '1') ) {
+        foreach ($rawGroups AS $group) {
+            if ($group->enable == 1 && ($group->visible == 1 || $this->_showHiddenGroups == '1')) {
                 $groupSelect[$group->id] = $group->name;
             }
         }
@@ -145,8 +144,8 @@ class Mailrelay_Mrsync_Model_Mrsync extends Mage_Core_Model_Abstract
     {
         $params = array(
             'function' => 'getSubscribers',
-            'email'=>$email,
-            'apiKey'=>$this->_apiKey
+            'email' => $email,
+            'apiKey' => $this->_apiKey
         );
         $data = $this->APICall($params);
         if ($data == NULL) {

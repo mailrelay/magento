@@ -17,7 +17,6 @@ class Mailrelay_Mrsync_Model_Core_Email_Template extends Mage_Core_Model_Email_T
      * @param   array       $variables    template variables
      * @return  boolean
      **/
-
     public function send($email, $name = null, array $variables = array())
     {
         if (!Mage::getStoreConfig("mrsync/smtp/smtp_enabled")) {
