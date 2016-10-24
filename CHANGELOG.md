@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [1.2.3] - 2016-10-24
 
 ### Added
 
@@ -17,4 +17,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Customer name is now synced instead of being always being null.
 
 
-[Unreleased]: https://github.com/mailrelay/magento/compare/v1.2.2...HEAD
+[1.2.3]: https://github.com/mailrelay/magento/compare/v1.2.2...v1.2.3
