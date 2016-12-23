@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Remove debug code that would halt execution.
 - Only sync subscribers automatically when customer checked newsletter checkbox.
-- Customer name is now synced instead of being always being null.
+- Customer name is now synced instead of always being null.
 
 
 [1.2.3]: https://github.com/mailrelay/magento/compare/v1.2.2...v1.2.3
